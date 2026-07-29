@@ -6,18 +6,17 @@
   <title>خالد ثائر رشيد</title>
   <style>
     :root {
-      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-      --card-bg: rgba(30, 41, 59, 0.7);
-      --border-color: rgba(255, 255, 255, 0.1);
+      --bg-gradient: linear-gradient(135deg, #090d16 0%, #171026 100%);
+      --card-bg: rgba(26, 27, 38, 0.75);
+      --border-color: rgba(255, 255, 255, 0.08);
       --text-main: #f8fafc;
       --text-sub: #94a3b8;
       --accent: #a855f7;
-      --accent-hover: #9333ea;
     }
     
     * {
       box-sizing: border-box;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     body {
@@ -48,13 +47,13 @@
       position: absolute;
       width: 90%;
       background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border-color);
       border-radius: 24px;
       padding: 35px 25px;
       text-align: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
       opacity: 0;
       transform: translateY(20px) scale(0.95);
       pointer-events: none;
@@ -68,8 +67,8 @@
 
     /* شاشة الترحيب */
     .welcome-screen h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
+      font-size: 2.2rem;
+      margin-bottom: 12px;
       background: linear-gradient(to right, #c084fc, #f472b6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -78,10 +77,10 @@
     .welcome-screen p {
       color: var(--text-sub);
       margin-bottom: 30px;
-      font-size: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
     }
 
-    /* زر الترحيب والدخول */
     .action-btn {
       background: linear-gradient(135deg, #a855f7, #6366f1);
       color: white;
@@ -91,19 +90,19 @@
       font-weight: bold;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+      box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
       width: 100%;
     }
 
     .action-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6);
+      box-shadow: 0 6px 25px rgba(168, 85, 247, 0.6);
     }
 
     /* شاشة المعلومات */
     .profile-screen h2 {
       margin: 0 0 5px;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
     }
 
     .job-title {
@@ -111,15 +110,16 @@
       font-size: 0.9rem;
       margin-bottom: 20px;
       font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
     .info-box {
-      background: rgba(15, 23, 42, 0.5);
-      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 14px;
       padding: 15px;
       margin-bottom: 20px;
       text-align: right;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .info-item {
@@ -127,8 +127,8 @@
       font-size: 0.9rem;
       color: var(--text-sub);
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 10px;
     }
 
     .info-item:last-child {
@@ -141,34 +141,65 @@
       direction: ltr;
     }
 
-    /* أزرار السوشيال ميديا */
+    /* أزرار السوشيال ميديا الاحترافية */
     .social-links {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .social-btn {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px;
-      border-radius: 12px;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-radius: 14px;
       text-decoration: none;
       color: white;
       font-weight: 600;
-      font-size: 0.95px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.95rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
     }
 
-    .btn-insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-    .btn-tiktok { background: #000000; }
-    .btn-discord { background: #5865F2; }
+    .social-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .social-btn:hover::before {
+      opacity: 1;
+    }
 
     .social-btn:hover {
-      opacity: 0.9;
-      transform: scale(1.02);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    /* ألوان دقيقة ومميزة لكل منصة */
+    .btn-insta { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+    .btn-tiktok { background: #000000; border-color: #333; }
+    .btn-discord { background: #5865F2; }
+
+    .social-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .social-arrow {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      transition: transform 0.3s;
+    }
+
+    .social-btn:hover .social-arrow {
+      transform: translateX(-4px);
     }
 
     /* زر العودة */
@@ -176,7 +207,7 @@
       background: transparent;
       border: none;
       color: var(--text-sub);
-      margin-top: 15px;
+      margin-top: 18px;
       cursor: pointer;
       font-size: 0.85rem;
     }
@@ -192,29 +223,43 @@
     <!-- شاشة الترحيب الأولى -->
     <div class="screen welcome-screen active" id="welcomeScreen">
       <h1>مرحباً بك 👋</h1>
-      <p>اضغط أدناه للدخول إلى بطاقتي الشخصية ومعلومات التواصل</p>
+      <p>اضغط أدناه للدخول إلى بطاقتي الشخصية ومعلومات التواصل الخاصة بي</p>
       <button class="action-btn" onclick="showProfile()">دخول للموقع 🚀</button>
     </div>
 
     <!-- شاشة المعلومات الشخصية -->
     <div class="screen profile-screen" id="profileScreen">
       <h2>خالد ثائر رشيد</h2>
-      <div class="job-title">مطور وباحث رقمي</div>
+      <div class="job-title">صفحة التواصل الشخصية</div>
 
       <div class="info-box">
-        <div class="info-item">📧 البريد: <span>khald1mk0@gmail.com</span></div>
-        <div class="info-item">📞 الهاتف: <span style="direction: ltr;">+964 780 349 4710</span></div>
+        <div class="info-item">البريد الإلكتروني: <span>khald1mk0@gmail.com</span></div>
+        <div class="info-item">رقم الهاتف: <span style="direction: ltr;">+964 780 349 4710</span></div>
       </div>
 
       <div class="social-links">
+        <!-- انستغرام -->
         <a href="https://instagram.com/vb_e1" target="_blank" class="social-btn btn-insta">
-          📸 انستغرام (@vb_e1)
+          <div class="social-info">
+            <span>📸 انستغرام</span>
+          </div>
+          <span style="direction: ltr; font-size: 0.85rem; opacity: 0.9;">@vb_e1</span>
         </a>
+
+        <!-- تيك توك -->
         <a href="https://tiktok.com/@vp_e11" target="_blank" class="social-btn btn-tiktok">
-          🎬 تيك توك (@vp_e11)
+          <div class="social-info">
+            <span>🎬 تيك توك</span>
+          </div>
+          <span style="direction: ltr; font-size: 0.85rem; opacity: 0.9;">@vp_e11</span>
         </a>
+
+        <!-- ديسكورد -->
         <a href="https://discord.com" target="_blank" class="social-btn btn-discord">
-          💬 ديسكورد (vb_e)
+          <div class="social-info">
+            <span>💬 ديسكورد</span>
+          </div>
+          <span style="direction: ltr; font-size: 0.85rem; opacity: 0.9;">vb_e</span>
         </a>
       </div>
 
