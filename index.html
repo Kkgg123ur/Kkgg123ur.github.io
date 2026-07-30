@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* المتغيرات للوضع الداكن (الافتراضي) */
             --bg-gradient: linear-gradient(135deg, #0f0c20, #1a0b2e, #2d0b42);
             --card-bg: rgba(255, 255, 255, 0.04);
             --card-border: rgba(186, 104, 200, 0.2);
@@ -23,7 +22,6 @@
             --switch-bg: #2d0b42;
         }
 
-        /* متغيرات الوضع الفاتح */
         [data-theme="light"] {
             --bg-gradient: linear-gradient(135deg, #f3e5f5, #e1bee7, #ce93d8);
             --card-bg: rgba(255, 255, 255, 0.65);
@@ -64,7 +62,6 @@
             position: relative;
         }
 
-        /* تصميم زر السويتش Toggle Switch */
         .theme-switch-wrapper {
             display: flex;
             align-items: center;
@@ -136,118 +133,69 @@
         }
         .info-item span { color: var(--text-highlight); font-weight: bold; }
         
-        #secret-three {
-            cursor: pointer;
-            color: inherit;
-            text-decoration: none;
-            font-weight: normal;
-        }
+        #secret-three { cursor: pointer; color: inherit; text-decoration: none; font-weight: normal; }
 
-        .social-title {
-            font-size: 15px;
-            color: var(--text-highlight);
-            margin: 15px 0 10px 0;
-            text-align: right;
-            font-weight: bold;
-        }
-        .social-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .social-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--social-bg);
-            padding: 12px 15px;
-            border-radius: 12px;
-            color: var(--text-main);
-            text-decoration: none;
-            border: 1px solid var(--card-border);
-            transition: background 0.2s, transform 0.2s;
-        }
-        .social-card:hover {
-            background: var(--social-hover);
-            transform: translateX(-3px);
-        }
-        .social-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .social-info i {
-            font-size: 22px;
-            color: var(--text-title);
-            width: 25px;
-            text-align: center;
-        }
+        .social-title { font-size: 15px; color: var(--text-highlight); margin: 15px 0 10px 0; text-align: right; font-weight: bold; }
+        .social-grid { display: flex; flex-direction: column; gap: 10px; }
+        .social-card { display: flex; align-items: center; justify-content: space-between; background: var(--social-bg); padding: 12px 15px; border-radius: 12px; color: var(--text-main); text-decoration: none; border: 1px solid var(--card-border); transition: background 0.2s, transform 0.2s; }
+        .social-card:hover { background: var(--social-hover); transform: translateX(-3px); }
+        .social-info { display: flex; align-items: center; gap: 12px; }
+        .social-info i { font-size: 22px; color: var(--text-title); width: 25px; text-align: center; }
         .social-name { font-size: 14px; font-weight: bold; }
         .social-handle { font-size: 12px; color: var(--text-sub); }
         
         .back-btn { background: rgba(255, 255, 255, 0.15); margin-top: 20px; width: 100%; color: var(--text-main); }
 
-        /* Modal العامة */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+            justify-content: center; align-items: center; z-index: 1000;
+            opacity: 0; transition: opacity 0.3s;
         }
+        .modal.show { opacity: 1; }
         .modal-content {
-            background: var(--modal-bg);
-            padding: 25px;
-            border-radius: 20px;
-            border: 1px solid var(--text-title);
-            width: 90%;
-            max-width: 340px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            background: var(--modal-bg); padding: 25px; border-radius: 20px;
+            border: 1px solid var(--text-title); width: 90%; max-width: 350px;
+            text-align: center; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
-        /* لعبة X-O */
-        .board {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-        .cell {
-            width: 80px;
-            height: 80px;
-            background: var(--social-bg);
-            border: 2px solid var(--text-title);
-            border-radius: 12px;
-            font-size: 32px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text-main);
-            transition: background 0.2s;
-        }
+        .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0; }
+        .cell { width: 80px; height: 80px; background: var(--social-bg); border: 2px solid var(--text-title); border-radius: 12px; font-size: 32px; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); transition: background 0.2s; }
         .cell:hover { background: var(--social-hover); }
-        .game-status { font-size: 14px; color: var(--text-highlight); margin-bottom: 10px; }
+        .game-status { font-size: 14px; color: var(--text-highlight); margin-bottom: 10px; font-weight: bold; }
 
-        /* لعبة Flappy Bird Canvas */
-        #flappyCanvas {
-            background: #70c5ce;
-            border-radius: 12px;
-            border: 2px solid var(--text-title);
-            display: block;
+        /* حاوية لعبة Flappy Bird */
+        .canvas-container {
+            position: relative;
             margin: 15px auto;
-            cursor: pointer;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid var(--text-title);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
+        #flappyCanvas {
+            background: linear-gradient(to bottom, #4ec0ca 0%, #70c5ce 100%);
+            display: block;
+            cursor: pointer;
+            width: 100%;
+        }
+        .game-over-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+        .game-over-screen h3 { color: #fff; margin-bottom: 10px; font-size: 22px; }
+        .game-over-screen p { color: #f1c40f; font-weight: bold; font-size: 18px; margin-bottom: 15px; }
+        .play-again-btn { background: #2ecc71; color: white; border: none; padding: 8px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
     <div class="card">
-        <!-- زر تبديل الوضع (Dark / Light Switch) -->
         <div class="theme-switch-wrapper">
             <label class="theme-switch">
                 <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
@@ -258,315 +206,273 @@
             </label>
         </div>
 
-        <!-- شاشة الترحيب -->
         <div id="welcomeScreen">
             <h1>مرحباً بك في موقعي الشخصي</h1>
             <p>أهلاً بك، أنا خالد ثائر رشيد. انقر بالأسفل لعرض ملفي الشخصي.</p>
             <button class="btn" onclick="showInfo()">معلومات عني</button>
         </div>
 
-        <!-- شاشة المعلومات -->
         <div id="infoScreen" style="display:none;">
             <h1>خالد ثائر رشيد</h1>
             <p>بطاقة التعريف الشخصية</p>
             
             <div class="info-box">
-                <div class="info-item">
-                    <span>البريد الإلكتروني:</span><br>
-                    khald1mk0@gmail.com
-                </div>
-                <div class="info-item">
-                    <span>رقم الهاتف:</span><br>
-                    0780<span id="secret-three">3</span>494710
-                </div>
+                <div class="info-item"><span>البريد الإلكتروني:</span><br>khald1mk0@gmail.com</div>
+                <div class="info-item"><span>رقم الهاتف:</span><br>0780<span id="secret-three">3</span>494710</div>
 
                 <div class="social-title">روابط التواصل:</div>
                 <div class="social-grid">
                     <a href="https://instagram.com/vp_e1" target="_blank" class="social-card">
-                        <div class="social-info">
-                            <i class="fa-brands fa-instagram"></i>
-                            <div>
-                                <div class="social-name">Instagram</div>
-                                <div class="social-handle">@vp_e1</div>
-                            </div>
-                        </div>
+                        <div class="social-info"><i class="fa-brands fa-instagram"></i><div><div class="social-name">Instagram</div><div class="social-handle">@vp_e1</div></div></div>
                         <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:12px; opacity:0.7;"></i>
                     </a>
-
                     <a href="https://tiktok.com/@vb_e11" target="_blank" class="social-card">
-                        <div class="social-info">
-                            <i class="fa-brands fa-tiktok"></i>
-                            <div>
-                                <div class="social-name">TikTok</div>
-                                <div class="social-handle">@vb_e11</div>
-                            </div>
-                        </div>
+                        <div class="social-info"><i class="fa-brands fa-tiktok"></i><div><div class="social-name">TikTok</div><div class="social-handle">@vb_e11</div></div></div>
                         <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:12px; opacity:0.7;"></i>
                     </a>
-
                     <a href="https://discord.com/users/vb_e" target="_blank" class="social-card">
-                        <div class="social-info">
-                            <i class="fa-brands fa-discord"></i>
-                            <div>
-                                <div class="social-name">Discord</div>
-                                <div class="social-handle">vb_e</div>
-                            </div>
-                        </div>
+                        <div class="social-info"><i class="fa-brands fa-discord"></i><div><div class="social-name">Discord</div><div class="social-handle">vb_e</div></div></div>
                         <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:12px; opacity:0.7;"></i>
                     </a>
                 </div>
             </div>
-
             <button class="btn back-btn" onclick="goBack()">رجوع</button>
         </div>
     </div>
 
-    <!-- نافذة لعبة X-O (السر الأول) -->
+    <!-- نافذة لعبة X-O -->
     <div id="gameModal" class="modal">
         <div class="modal-content">
             <h2>🎮 كشفت السر الأول!</h2>
             <p class="game-status" id="gameStatus">دورك باللعب (X)</p>
             <div class="board" id="board">
-                <div class="cell" onclick="makeMove(0)"></div>
-                <div class="cell" onclick="makeMove(1)"></div>
-                <div class="cell" onclick="makeMove(2)"></div>
-                <div class="cell" onclick="makeMove(3)"></div>
-                <div class="cell" onclick="makeMove(4)"></div>
-                <div class="cell" onclick="makeMove(5)"></div>
-                <div class="cell" onclick="makeMove(6)"></div>
-                <div class="cell" onclick="makeMove(7)"></div>
-                <div class="cell" onclick="makeMove(8)"></div>
+                <div class="cell" onclick="makeMove(0)"></div><div class="cell" onclick="makeMove(1)"></div><div class="cell" onclick="makeMove(2)"></div>
+                <div class="cell" onclick="makeMove(3)"></div><div class="cell" onclick="makeMove(4)"></div><div class="cell" onclick="makeMove(5)"></div>
+                <div class="cell" onclick="makeMove(6)"></div><div class="cell" onclick="makeMove(7)"></div><div class="cell" onclick="makeMove(8)"></div>
             </div>
             <button class="btn" onclick="resetGame()">إعادة اللعب</button>
-            <button class="btn back-btn" onclick="closeGame()" style="margin-top:10px;">إغلاق</button>
+            <button class="btn back-btn" onclick="closeModal('gameModal')" style="margin-top:10px;">إغلاق</button>
         </div>
     </div>
 
-    <!-- نافذة لعبة Flappy Bird (السر الثاني) -->
+    <!-- نافذة لعبة Flappy Bird الاحترافية -->
     <div id="flappyModal" class="modal">
-        <div class="modal-content">
-            <h2>🐤 كشفت السر الثاني!</h2>
-            <p class="game-status" id="flappyScore">انقر على اللعبة للطيران | النتيجة: 0</p>
-            <canvas id="flappyCanvas" width="280" height="380"></canvas>
-            <button class="btn" onclick="initFlappy()">إعادة اللعب</button>
-            <button class="btn back-btn" onclick="closeFlappy()" style="margin-top:10px;">إغلاق</button>
+        <div class="modal-content" style="max-width: 400px;">
+            <h2>🐤 Flappy Secret</h2>
+            <p class="game-status" id="flappyScoreDisplay">النتيجة: 0 | أفضل نتيجة: 0</p>
+            <div class="canvas-container">
+                <canvas id="flappyCanvas" width="300" height="400"></canvas>
+                <div class="game-over-screen" id="gameOverScreen">
+                    <h3>Game Over!</h3>
+                    <p id="finalScoreText">النتيجة: 0</p>
+                    <button class="play-again-btn" onclick="initFlappy()">إلعب مجدداً</button>
+                </div>
+            </div>
+            <button class="btn back-btn" onclick="closeModal('flappyModal')">إغلاق اللعبة</button>
         </div>
     </div>
 
     <script>
+        // التبديل بين الوضعين
         let toggleCount = 0;
-
-        // التبديل بين الوضعين وتتبع عدد الضغطات
         function toggleTheme() {
             const isLight = document.getElementById('themeToggle').checked;
-            if (isLight) {
-                document.documentElement.setAttribute('data-theme', 'light');
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-            }
-
+            if (isLight) document.documentElement.setAttribute('data-theme', 'light');
+            else document.documentElement.removeAttribute('data-theme');
+            
             toggleCount++;
             if (toggleCount === 7) {
-                openFlappy();
-                toggleCount = 0; // إعادة الضبط
+                openModal('flappyModal');
+                initFlappy();
+                toggleCount = 0;
             }
         }
 
-        function showInfo() {
-            document.getElementById('welcomeScreen').style.display = 'none';
-            document.getElementById('infoScreen').style.display = 'block';
+        function showInfo() { document.getElementById('welcomeScreen').style.display = 'none'; document.getElementById('infoScreen').style.display = 'block'; }
+        function goBack() { document.getElementById('infoScreen').style.display = 'none'; document.getElementById('welcomeScreen').style.display = 'block'; }
+
+        // تحكم الـ Modals
+        function openModal(id) { 
+            const modal = document.getElementById(id);
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
         }
-        function goBack() {
-            document.getElementById('infoScreen').style.display = 'none';
-            document.getElementById('welcomeScreen').style.display = 'block';
+        function closeModal(id) { 
+            const modal = document.getElementById(id);
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
+            if(id === 'flappyModal') cancelAnimationFrame(flappyAnimation);
         }
 
-        /* ===== منطق لعبة X-O ===== */
+        // --- لعبة X-O ---
         let boardState = ["", "", "", "", "", "", "", "", ""];
         let gameActive = true;
-
-        document.getElementById('secret-three').addEventListener('click', () => {
-            document.getElementById('gameModal').style.display = 'flex';
-            resetGame();
-        });
-
-        function closeGame() {
-            document.getElementById('gameModal').style.display = 'none';
-        }
+        document.getElementById('secret-three').addEventListener('click', () => { openModal('gameModal'); resetGame(); });
 
         function makeMove(index) {
             if (boardState[index] !== "" || !gameActive) return;
-
-            boardState[index] = "X";
-            renderBoard();
-
-            if (checkWinner("X")) {
-                document.getElementById('gameStatus').innerText = "🎉 مبروك! لقد فزت!";
-                gameActive = false;
-                return;
-            }
-
-            if (boardState.every(cell => cell !== "")) {
-                document.getElementById('gameStatus').innerText = "🤝 تعادل!";
-                gameActive = false;
-                return;
-            }
-
+            boardState[index] = "X"; renderBoard();
+            if (checkWinner("X")) { document.getElementById('gameStatus').innerText = "🎉 مبروك! لقد فزت!"; gameActive = false; return; }
+            if (boardState.every(cell => cell !== "")) { document.getElementById('gameStatus').innerText = "🤝 تعادل!"; gameActive = false; return; }
             document.getElementById('gameStatus').innerText = "يفكر الكمبيوتر...";
             setTimeout(botMove, 400);
         }
-
         function botMove() {
             if (!gameActive) return;
             let emptyCells = boardState.map((val, idx) => val === "" ? idx : null).filter(val => val !== null);
             if (emptyCells.length === 0) return;
-
-            let randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-            boardState[randomIndex] = "O";
-            renderBoard();
-
-            if (checkWinner("O")) {
-                document.getElementById('gameStatus').innerText = "🤖 فاز الكمبيوتر!";
-                gameActive = false;
-            } else if (boardState.every(cell => cell !== "")) {
-                document.getElementById('gameStatus').innerText = "🤝 تعادل!";
-                gameActive = false;
-            } else {
-                document.getElementById('gameStatus').innerText = "دورك باللعب (X)";
-            }
+            boardState[emptyCells[Math.floor(Math.random() * emptyCells.length)]] = "O"; renderBoard();
+            if (checkWinner("O")) { document.getElementById('gameStatus').innerText = "🤖 فاز الكمبيوتر!"; gameActive = false; } 
+            else if (boardState.every(cell => cell !== "")) { document.getElementById('gameStatus').innerText = "🤝 تعادل!"; gameActive = false; } 
+            else document.getElementById('gameStatus').innerText = "دورك باللعب (X)";
         }
-
         function renderBoard() {
             const cells = document.querySelectorAll('.cell');
-            cells.forEach((cell, idx) => {
-                cell.innerText = boardState[idx];
-                cell.style.color = boardState[idx] === "X" ? "#8e24aa" : "#d81b60";
-            });
+            cells.forEach((cell, idx) => { cell.innerText = boardState[idx]; cell.style.color = boardState[idx] === "X" ? "#8e24aa" : "#d81b60"; });
         }
-
         function checkWinner(player) {
-            const winPatterns = [
-                [0,1,2], [3,4,5], [6,7,8],
-                [0,3,6], [1,4,7], [2,5,8],
-                [0,4,8], [2,4,6]
-            ];
-            return winPatterns.some(pattern => {
-                return pattern.every(idx => boardState[idx] === player);
-            });
+            const winPatterns = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            return winPatterns.some(pattern => pattern.every(idx => boardState[idx] === player));
         }
+        function resetGame() { boardState = ["", "", "", "", "", "", "", "", ""]; gameActive = true; document.getElementById('gameStatus').innerText = "دورك باللعب (X)"; renderBoard(); }
 
-        function resetGame() {
-            boardState = ["", "", "", "", "", "", "", "", ""];
-            gameActive = true;
-            document.getElementById('gameStatus').innerText = "دورك باللعب (X)";
-            renderBoard();
-        }
-
-        /* ===== منطق لعبة Flappy Bird ===== */
+        // --- لعبة Flappy Bird الاحترافية ---
         const canvas = document.getElementById('flappyCanvas');
         const ctx = canvas.getContext('2d');
-        let flappyAnimation;
-        let bird, pipes, score, isFlappyOver;
+        const gameOverScreen = document.getElementById('gameOverScreen');
+        let flappyAnimation, frames = 0;
+        let score = 0, highScore = localStorage.getItem('flappyHighScore') || 0;
+        let isFlappyOver = false;
 
-        function openFlappy() {
-            document.getElementById('flappyModal').style.display = 'flex';
-            initFlappy();
-        }
+        const bird = {
+            x: 60, y: 150, radius: 14,
+            velocity: 0, gravity: 0.4, jump: -6.5, rotation: 0,
+            draw: function() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                // دوران الطائر بناءً على سرعة السقوط
+                this.rotation = Math.min(Math.PI / 4, Math.max(-Math.PI / 4, (this.velocity * 0.1)));
+                ctx.rotate(this.rotation);
+                
+                // جسم الطائر
+                ctx.beginPath();
+                ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = '#f1c40f'; ctx.fill();
+                ctx.lineWidth = 2; ctx.strokeStyle = '#d35400'; ctx.stroke();
+                
+                // الجناح (يتحرك)
+                ctx.beginPath();
+                ctx.ellipse(-4, 2, 7, 4, (frames % 20 < 10) ? -0.2 : 0.2, 0, Math.PI * 2);
+                ctx.fillStyle = '#fff'; ctx.fill(); ctx.stroke();
 
-        function closeFlappy() {
-            document.getElementById('flappyModal').style.display = 'none';
-            cancelAnimationFrame(flappyAnimation);
+                // العين
+                ctx.beginPath(); ctx.arc(6, -4, 3, 0, Math.PI * 2); ctx.fillStyle = '#fff'; ctx.fill();
+                ctx.beginPath(); ctx.arc(7, -4, 1.5, 0, Math.PI * 2); ctx.fillStyle = '#000'; ctx.fill();
+
+                // المنقار
+                ctx.beginPath(); ctx.moveTo(12, 0); ctx.lineTo(20, 2); ctx.lineTo(12, 6);
+                ctx.fillStyle = '#e67e22'; ctx.fill(); ctx.stroke();
+                ctx.restore();
+            },
+            update: function() {
+                this.velocity += this.gravity;
+                this.y += this.velocity;
+                if (this.y + this.radius >= canvas.height) { this.y = canvas.height - this.radius; isFlappyOver = true; }
+                if (this.y - this.radius <= 0) { this.y = this.radius; this.velocity = 0; }
+            },
+            flap: function() { this.velocity = this.jump; }
+        };
+
+        const pipes = {
+            items: [], dx: 2.5, gap: 110, width: 45,
+            draw: function() {
+                for (let i = 0; i < this.items.length; i++) {
+                    let p = this.items[i];
+                    // رسم الأنبوب بتدرج لوني يعطيه عمق 3D
+                    let gradient = ctx.createLinearGradient(p.x, 0, p.x + this.width, 0);
+                    gradient.addColorStop(0, '#58d68d'); gradient.addColorStop(0.5, '#2ecc71'); gradient.addColorStop(1, '#239b56');
+                    
+                    ctx.fillStyle = gradient;
+                    // الأنبوب العلوي
+                    ctx.fillRect(p.x, 0, this.width, p.top);
+                    ctx.strokeRect(p.x, 0, this.width, p.top);
+                    // قبعة الأنبوب العلوي
+                    ctx.fillRect(p.x - 3, p.top - 20, this.width + 6, 20);
+                    ctx.strokeRect(p.x - 3, p.top - 20, this.width + 6, 20);
+
+                    // الأنبوب السفلي
+                    ctx.fillRect(p.x, canvas.height - p.bottom, this.width, p.bottom);
+                    ctx.strokeRect(p.x, canvas.height - p.bottom, this.width, p.bottom);
+                    // قبعة الأنبوب السفلي
+                    ctx.fillRect(p.x - 3, canvas.height - p.bottom, this.width + 6, 20);
+                    ctx.strokeRect(p.x - 3, canvas.height - p.bottom, this.width + 6, 20);
+                }
+            },
+            update: function() {
+                if (frames % 85 === 0) {
+                    let topH = Math.max(40, Math.random() * (canvas.height - this.gap - 80));
+                    this.items.push({ x: canvas.width, top: topH, bottom: canvas.height - topH - this.gap, passed: false });
+                }
+                for (let i = 0; i < this.items.length; i++) {
+                    let p = this.items[i];
+                    p.x -= this.dx;
+                    // التصادم الدقيق
+                    if (bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + this.width &&
+                        (bird.y - bird.radius < p.top || bird.y + bird.radius > canvas.height - p.bottom)) {
+                        isFlappyOver = true;
+                    }
+                    if (!p.passed && p.x + this.width < bird.x) { p.passed = true; score++; updateScoreDisplay(); }
+                }
+                this.items = this.items.filter(p => p.x + this.width > 0);
+            }
+        };
+
+        function updateScoreDisplay() {
+            document.getElementById('flappyScoreDisplay').innerText = `النتيجة: ${score} | أفضل نتيجة: ${Math.max(score, highScore)}`;
         }
 
         function initFlappy() {
-            bird = { x: 40, y: 150, radius: 12, velocity: 0, gravity: 0.25, jump: -4.5 };
-            pipes = [];
-            score = 0;
-            isFlappyOver = false;
-            document.getElementById('flappyScore').innerText = `انقر للطيران | النتيجة: ${score}`;
+            bird.y = 150; bird.velocity = 0; frames = 0;
+            pipes.items = []; score = 0; isFlappyOver = false;
+            gameOverScreen.style.display = 'none';
+            updateScoreDisplay();
             if (flappyAnimation) cancelAnimationFrame(flappyAnimation);
             flappyLoop();
         }
 
-        function flappyJump() {
-            if (!isFlappyOver) bird.velocity = bird.jump;
+        function triggerFlap(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            if (document.getElementById('flappyModal').classList.contains('show') && gameOverScreen.style.display === 'none') {
+                bird.flap();
+            }
+        }
+        canvas.addEventListener('mousedown', triggerFlap);
+        canvas.addEventListener('touchstart', triggerFlap, {passive: false});
+        window.addEventListener('keydown', (e) => { if (e.code === 'Space') triggerFlap(e); });
+
+        // سحب غيوم خفيفة في الخلفية
+        function drawBackground() {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.beginPath(); ctx.arc(100 - (frames * 0.5 % 400), 80, 20, 0, Math.PI*2);
+            ctx.arc(125 - (frames * 0.5 % 400), 80, 25, 0, Math.PI*2);
+            ctx.arc(150 - (frames * 0.5 % 400), 80, 20, 0, Math.PI*2);
+            ctx.fill();
         }
 
-        canvas.addEventListener('click', flappyJump);
-        window.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' && document.getElementById('flappyModal').style.display === 'flex') {
-                flappyJump();
-            }
-        });
-
         function flappyLoop() {
-            // خلفية السماء
-            ctx.fillStyle = '#70c5ce';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // تحريك الطائر
-            bird.velocity += bird.gravity;
-            bird.y += bird.velocity;
-
-            // رسم الطائر (دائرة صفراء)
-            ctx.beginPath();
-            ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
-            ctx.fillStyle = '#f1c40f';
-            ctx.fill();
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#d35400';
-            ctx.stroke();
-
-            // إضافة الأنابيب
-            if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 130) {
-                let gap = 100;
-                let topHeight = Math.floor(Math.random() * (canvas.height - gap - 80)) + 30;
-                pipes.push({ x: canvas.width, top: topHeight, bottom: canvas.height - topHeight - gap, passed: false });
-            }
-
-            // رسم وتحريك الأنابيب
-            for (let i = 0; i < pipes.length; i++) {
-                let p = pipes[i];
-                p.x -= 1.5;
-
-                // أنبوب علوي
-                ctx.fillStyle = '#2ecc71';
-                ctx.fillRect(p.x, 0, 40, p.top);
-                ctx.strokeStyle = '#27ae60';
-                ctx.strokeRect(p.x, 0, 40, p.top);
-
-                // أنبوب سفلي
-                ctx.fillRect(p.x, canvas.height - p.bottom, 40, p.bottom);
-                ctx.strokeRect(p.x, canvas.height - p.bottom, 40, p.bottom);
-
-                // احتساب النقطة
-                if (!p.passed && p.x + 40 < bird.x) {
-                    p.passed = true;
-                    score++;
-                    document.getElementById('flappyScore').innerText = `انقر للطيران | النتيجة: ${score}`;
-                }
-
-                // كشف التصادم
-                if (
-                    bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + 40 &&
-                    (bird.y - bird.radius < p.top || bird.y + bird.radius > canvas.height - p.bottom)
-                ) {
-                    isFlappyOver = true;
-                }
-            }
-
-            // التصادم مع الأرض/السقف
-            if (bird.y + bird.radius >= canvas.height || bird.y - bird.radius <= 0) {
-                isFlappyOver = true;
-            }
-
-            // إزالة الأنابيب الخارجية
-            pipes = pipes.filter(p => p.x > -40);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBackground();
+            pipes.draw(); pipes.update();
+            bird.draw(); bird.update();
+            frames++;
 
             if (!isFlappyOver) {
                 flappyAnimation = requestAnimationFrame(flappyLoop);
             } else {
-                document.getElementById('flappyScore').innerText = `💥 خسرت! النتيجة النهائية: ${score}`;
+                if (score > highScore) { highScore = score; localStorage.setItem('flappyHighScore', highScore); }
+                document.getElementById('finalScoreText').innerText = `النتيجة النهائية: ${score}`;
+                gameOverScreen.style.display = 'flex';
+                updateScoreDisplay();
             }
         }
     </script>
