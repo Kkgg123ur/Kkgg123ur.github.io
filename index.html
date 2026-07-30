@@ -187,11 +187,12 @@
         
         .back-btn { background: rgba(255, 255, 255, 0.15); margin-top: 20px; width: 100%; color: var(--text-main); }
 
+        /* Modal العامة */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(8px);
             justify-content: center;
             align-items: center;
@@ -203,10 +204,12 @@
             border-radius: 20px;
             border: 1px solid var(--text-title);
             width: 90%;
-            max-width: 320px;
+            max-width: 340px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
+
+        /* لعبة X-O */
         .board {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -230,6 +233,16 @@
         }
         .cell:hover { background: var(--social-hover); }
         .game-status { font-size: 14px; color: var(--text-highlight); margin-bottom: 10px; }
+
+        /* لعبة Flappy Bird Canvas */
+        #flappyCanvas {
+            background: #70c5ce;
+            border-radius: 12px;
+            border: 2px solid var(--text-title);
+            display: block;
+            margin: 15px auto;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -308,10 +321,10 @@
         </div>
     </div>
 
-    <!-- نافذة اللعبة المصغرة -->
+    <!-- نافذة لعبة X-O (السر الأول) -->
     <div id="gameModal" class="modal">
         <div class="modal-content">
-            <h2>🎮 كشفت السر!</h2>
+            <h2>🎮 كشفت السر الأول!</h2>
             <p class="game-status" id="gameStatus">دورك باللعب (X)</p>
             <div class="board" id="board">
                 <div class="cell" onclick="makeMove(0)"></div>
@@ -329,14 +342,33 @@
         </div>
     </div>
 
+    <!-- نافذة لعبة Flappy Bird (السر الثاني) -->
+    <div id="flappyModal" class="modal">
+        <div class="modal-content">
+            <h2>🐤 كشفت السر الثاني!</h2>
+            <p class="game-status" id="flappyScore">انقر على اللعبة للطيران | النتيجة: 0</p>
+            <canvas id="flappyCanvas" width="280" height="380"></canvas>
+            <button class="btn" onclick="initFlappy()">إعادة اللعب</button>
+            <button class="btn back-btn" onclick="closeFlappy()" style="margin-top:10px;">إغلاق</button>
+        </div>
+    </div>
+
     <script>
-        // التبديل بين الوضع الداكن والفاتح
+        let toggleCount = 0;
+
+        // التبديل بين الوضعين وتتبع عدد الضغطات
         function toggleTheme() {
             const isLight = document.getElementById('themeToggle').checked;
             if (isLight) {
                 document.documentElement.setAttribute('data-theme', 'light');
             } else {
                 document.documentElement.removeAttribute('data-theme');
+            }
+
+            toggleCount++;
+            if (toggleCount === 7) {
+                openFlappy();
+                toggleCount = 0; // إعادة الضبط
             }
         }
 
@@ -349,6 +381,7 @@
             document.getElementById('welcomeScreen').style.display = 'block';
         }
 
+        /* ===== منطق لعبة X-O ===== */
         let boardState = ["", "", "", "", "", "", "", "", ""];
         let gameActive = true;
 
@@ -427,6 +460,114 @@
             gameActive = true;
             document.getElementById('gameStatus').innerText = "دورك باللعب (X)";
             renderBoard();
+        }
+
+        /* ===== منطق لعبة Flappy Bird ===== */
+        const canvas = document.getElementById('flappyCanvas');
+        const ctx = canvas.getContext('2d');
+        let flappyAnimation;
+        let bird, pipes, score, isFlappyOver;
+
+        function openFlappy() {
+            document.getElementById('flappyModal').style.display = 'flex';
+            initFlappy();
+        }
+
+        function closeFlappy() {
+            document.getElementById('flappyModal').style.display = 'none';
+            cancelAnimationFrame(flappyAnimation);
+        }
+
+        function initFlappy() {
+            bird = { x: 40, y: 150, radius: 12, velocity: 0, gravity: 0.25, jump: -4.5 };
+            pipes = [];
+            score = 0;
+            isFlappyOver = false;
+            document.getElementById('flappyScore').innerText = `انقر للطيران | النتيجة: ${score}`;
+            if (flappyAnimation) cancelAnimationFrame(flappyAnimation);
+            flappyLoop();
+        }
+
+        function flappyJump() {
+            if (!isFlappyOver) bird.velocity = bird.jump;
+        }
+
+        canvas.addEventListener('click', flappyJump);
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && document.getElementById('flappyModal').style.display === 'flex') {
+                flappyJump();
+            }
+        });
+
+        function flappyLoop() {
+            // خلفية السماء
+            ctx.fillStyle = '#70c5ce';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // تحريك الطائر
+            bird.velocity += bird.gravity;
+            bird.y += bird.velocity;
+
+            // رسم الطائر (دائرة صفراء)
+            ctx.beginPath();
+            ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#f1c40f';
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#d35400';
+            ctx.stroke();
+
+            // إضافة الأنابيب
+            if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 130) {
+                let gap = 100;
+                let topHeight = Math.floor(Math.random() * (canvas.height - gap - 80)) + 30;
+                pipes.push({ x: canvas.width, top: topHeight, bottom: canvas.height - topHeight - gap, passed: false });
+            }
+
+            // رسم وتحريك الأنابيب
+            for (let i = 0; i < pipes.length; i++) {
+                let p = pipes[i];
+                p.x -= 1.5;
+
+                // أنبوب علوي
+                ctx.fillStyle = '#2ecc71';
+                ctx.fillRect(p.x, 0, 40, p.top);
+                ctx.strokeStyle = '#27ae60';
+                ctx.strokeRect(p.x, 0, 40, p.top);
+
+                // أنبوب سفلي
+                ctx.fillRect(p.x, canvas.height - p.bottom, 40, p.bottom);
+                ctx.strokeRect(p.x, canvas.height - p.bottom, 40, p.bottom);
+
+                // احتساب النقطة
+                if (!p.passed && p.x + 40 < bird.x) {
+                    p.passed = true;
+                    score++;
+                    document.getElementById('flappyScore').innerText = `انقر للطيران | النتيجة: ${score}`;
+                }
+
+                // كشف التصادم
+                if (
+                    bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + 40 &&
+                    (bird.y - bird.radius < p.top || bird.y + bird.radius > canvas.height - p.bottom)
+                ) {
+                    isFlappyOver = true;
+                }
+            }
+
+            // التصادم مع الأرض/السقف
+            if (bird.y + bird.radius >= canvas.height || bird.y - bird.radius <= 0) {
+                isFlappyOver = true;
+            }
+
+            // إزالة الأنابيب الخارجية
+            pipes = pipes.filter(p => p.x > -40);
+
+            if (!isFlappyOver) {
+                flappyAnimation = requestAnimationFrame(flappyLoop);
+            } else {
+                document.getElementById('flappyScore').innerText = `💥 خسرت! النتيجة النهائية: ${score}`;
+            }
         }
     </script>
 </body>
