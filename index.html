@@ -156,7 +156,6 @@
     </div>
 
     <script>
-        // Theme and Modals
         let toggleCount = 0;
         function toggleTheme() {
             const isLight = document.getElementById('themeToggle').checked;
@@ -175,7 +174,6 @@
         function openModal(id) { const modal = document.getElementById(id); modal.style.display = 'flex'; setTimeout(() => modal.classList.add('show'), 10); }
         function closeModal(id) { const modal = document.getElementById(id); modal.classList.remove('show'); setTimeout(() => { modal.style.display = 'none'; }, 300); if(id === 'flappyModal') cancelAnimationFrame(loop); }
 
-        // X-O Logic
         let boardState = ["", "", "", "", "", "", "", "", ""]; let gameActive = true;
         document.getElementById('secret-three').addEventListener('click', () => { openModal('gameModal'); resetGame(); });
         function makeMove(index) {
@@ -196,21 +194,18 @@
         function checkWinner(player) { const winPatterns = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]; return winPatterns.some(pattern => pattern.every(idx => boardState[idx] === player)); }
         function resetGame() { boardState = ["", "", "", "", "", "", "", "", ""]; gameActive = true; document.getElementById('gameStatus').innerText = "دورك باللعب (X)"; renderBoard(); }
 
-        // --- TRUE ORIGINAL FLAPPY BIRD ENGINE ---
         const cvs = document.getElementById("flappyCanvas");
         const ctx = cvs.getContext("2d");
         
-        // Load Original Assets directly from GitHub CDN
+        // هنا التغيير الأساسي: استخدام الصورة من ملفاتك المحلية لمنع حظرها
         const sprite = new Image();
-        sprite.src = "https://raw.githubusercontent.com/samuelcust/flappy-bird-assets/master/sprites/sprite.png";
+        sprite.src = "sprite.png";
         
         let frames = 0; let loop;
         const RAD = Math.PI/180;
         
-        // Game States
         const state = { current: 0, getReady: 0, game: 1, over: 2 };
         
-        // Control
         function clickHandler(e) {
             if(e) { e.preventDefault(); e.stopPropagation(); }
             switch(state.current) {
@@ -230,7 +225,6 @@
         cvs.addEventListener("touchstart", clickHandler, {passive: false});
         window.addEventListener('keydown', (e) => { if (e.code === 'Space' && document.getElementById('flappyModal').classList.contains('show')) clickHandler(e); });
 
-        // Background
         const bg = {
             sX: 0, sY: 0, w: 275, h: 226, x: 0, y: cvs.height - 226,
             draw: function() {
@@ -239,7 +233,6 @@
             }
         };
 
-        // Foreground (Ground)
         const fg = {
             sX: 276, sY: 0, w: 224, h: 112, x: 0, y: cvs.height - 112, dx: 2,
             draw: function() {
@@ -251,7 +244,6 @@
             }
         };
 
-        // Bird
         const bird = {
             animation: [
                 {sX: 276, sY: 112}, {sX: 276, sY: 139}, {sX: 276, sY: 164}, {sX: 276, sY: 139}
@@ -297,7 +289,6 @@
             speedReset: function() { this.speed = 0; }
         };
 
-        // Pipes
         const pipes = {
             position: [],
             top: { sX: 553, sY: 0 },
@@ -340,7 +331,6 @@
             reset: function() { this.position = []; }
         };
 
-        // Score & UI Overlays
         const getReady = {
             sX: 0, sY: 228, w: 173, h: 152, x: cvs.width/2 - 173/2, y: 80,
             draw: function() { if(state.current == state.getReady) { ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w, this.h); } }
